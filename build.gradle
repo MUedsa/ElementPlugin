@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.intellij' version '0.3.1'
+    id 'org.jetbrains.intellij' version '1.8.0'
+    id 'java'
 }
 
 group 'element'
@@ -9,24 +10,22 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
-    maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 intellij {
-    version 'IU-173.4674.33'
-    /*version 'IU-LATEST-TRUNK-SNAPSHOT'*/
-    pluginName 'element'
-    downloadSources false
-    updateSinceUntilBuild false
-    plugins = ['JavaScriptLanguage', 'org.jetbrains.plugins.vue:173.4301.12']
+    version = '183.4284.148'
+    type = 'IU'
+    pluginName = 'element'
+    downloadSources = false
+    updateSinceUntilBuild = false
+    plugins = ['JavaScriptLanguage', 'org.jetbrains.plugins.vue:183.4284.36']
 }
 
 //指定编译的编码
