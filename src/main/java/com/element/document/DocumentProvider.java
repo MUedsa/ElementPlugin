@@ -38,29 +38,31 @@ public class DocumentProvider extends AbstractDocumentationProvider {
 
     @Override
     public String generateDoc(final PsiElement element, @Nullable final PsiElement originalElement) {
-        // 相关处理，不处理返回null
-        String text = originalElement.getText();
+        if(null != originalElement) {
+            // 相关处理，不处理返回null
+            String text = originalElement.getText();
 
-        if (null != text) {
-            System.out.println(text);
-            String doc = "doc: " + text;
-            String textHandle = text.replaceAll("-", "").replaceAll("\n|\r\n", "");
-            Class clazz = DocumentConstant.class;
-            Field[] fields = clazz.getFields();
-            for (Field field : fields) {
-                if (textHandle.equals(field.getName()) && field.getType().toString().endsWith("java.lang.String")) {
-                    try {
-                        doc = (String) field.get(DocumentConstant.class);
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+            if (null != text) {
+                System.out.println(text);
+                String doc = "doc: " + text;
+                String textHandle = text.replaceAll("-", "").replaceAll("\n|\r\n", "");
+                Class clazz = DocumentConstant.class;
+                Field[] fields = clazz.getFields();
+                for (Field field : fields) {
+                    if (textHandle.equals(field.getName()) && field.getType().toString().endsWith("java.lang.String")) {
+                        try {
+                            doc = (String) field.get(DocumentConstant.class);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                    break;
                 }
-            }
-            if ("doc: ".equals(doc)) {
-                return null;
-            }else{
-                return doc;
+                if ("doc: ".equals(doc)) {
+                    return null;
+                }else{
+                    return doc;
+                }
             }
         }
         return null;
